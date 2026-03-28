@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",                                
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "rootDir": "./src",
-    "outDir": "./dist",  
-    "moduleResolution": "node10", 
+    "outDir": "./dist",
+    "target": "ES2023",
     "strict": true,
     "esModuleInterop": true,
+    "ignoreDeprecations": "6.0",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

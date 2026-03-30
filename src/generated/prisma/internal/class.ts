@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.6.0",
   "engineVersion": "75cbdc1eb7150937890ad5465d861175c6624711",
   "activeProvider": "postgresql",
-  "inlineSchema": "// prisma/schema.prisma\n// Define your database models\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// Example models\n\nmodel Specialty {\n  id          String  @id @default(uuid())\n  title       String  @unique @db.VarChar(255)\n  description String? @db.Text\n  icon        String? @db.VarChar(255)\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  isDeleted Boolean   @default(false)\n  deletedAt DateTime?\n\n  @@index([isDeleted], name: \"idx_specialty_is_deleted\")\n  @@index([title], name: \"idx_specialty_title\")\n  @@map(\"specialties\")\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Specialty {\n  id          String  @id @default(uuid())\n  title       String  @unique @db.VarChar(255)\n  description String? @db.Text\n  icon        String? @db.VarChar(255)\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  isDeleted Boolean   @default(false)\n  deletedAt DateTime?\n\n  @@index([isDeleted], name: \"idx_specialty_is_deleted\")\n  @@index([title], name: \"idx_specialty_title\")\n  @@map(\"specialties\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -106,7 +106,6 @@ export interface PrismaClient<
   in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
   in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
-  Specialty: any
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
   $on<V extends LogOpts>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;

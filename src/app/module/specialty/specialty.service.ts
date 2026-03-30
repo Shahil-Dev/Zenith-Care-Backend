@@ -13,6 +13,8 @@ const getAllSpecialties = async (): Promise<Specialty[]> => {
     return specialties
 }
 
+
+
 const getSpecialtyById = async (id: string): Promise<Specialty | null> => {
     const specialty = await prisma.specialty.findUnique({
         where: { id }

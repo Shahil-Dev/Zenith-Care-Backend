@@ -9,14 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
-export const Role = {
+export const role = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
   DOCTOR: 'DOCTOR',
-  PESTILENT: 'PESTILENT'
+  PATIENT: 'PATIENT'
 } as const
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type role = (typeof role)[keyof typeof role]
 
 
 export const UserStatus = {

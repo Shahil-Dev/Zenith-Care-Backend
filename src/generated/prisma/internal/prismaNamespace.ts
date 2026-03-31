@@ -822,7 +822,7 @@ export const UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   role: 'role',
-  needPasswordReset: 'needPasswordReset',
+  needPasswordChange: 'needPasswordChange',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   emailVerified: 'emailVerified',

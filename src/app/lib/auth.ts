@@ -1,12 +1,12 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
-import { Role, UserStatus } from "../../generated/prisma/enums";
+import { role, UserStatus } from "../../generated/prisma/enums";
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "sqlite",
-    }),
+    }),    
 
     emailAndPassword: {
         enabled: true,
@@ -15,19 +15,19 @@ export const auth = betterAuth({
     user: {
         additionalFields: {
 
-            Role: {
+            role: {
                 type: "string",
                 required: true,
-                defaultValue: Role.PESTILENT,
+                defaultValue: role.PATIENT,
             },
 
-            UserStatus: {
+            status: {
                 type: "string",
                 required: true,
                 defaultValue: UserStatus.ACTIVE,
             }
             ,
-            needChangePassword: {
+            needPasswordChange: {
                 type: "boolean",
                 required: true,
                 defaultValue: false
@@ -44,5 +44,12 @@ export const auth = betterAuth({
                 required: false,
             }
         }
-    }
+    },
+
+//    trustedOrigins: [process.env.BETTER_AUTH_URL || "http://localhost:5000"],
+//    advanced:{
+//     disableCSRFCheck: true,
+//    }
+
+
 });

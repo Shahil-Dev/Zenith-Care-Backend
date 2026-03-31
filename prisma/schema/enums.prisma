@@ -1,8 +1,8 @@
-enum Role {
+enum role {
     SUPER_ADMIN
     ADMIN
     DOCTOR
-    PESTILENT
+    PATIENT
 }
 
 enum UserStatus {

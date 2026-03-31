@@ -18,8 +18,19 @@ const registrationPestilent = CatchAsync(async (req: Request, res: Response) => 
 
 })
 
+const loginPestilent = CatchAsync(async (req: Request, res: Response) => {
+    const payload = req.body;
+    const result = await authService.userLogin(payload);
 
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "User logged in successfully",
+        data: result
+    })
+})
 
 export const authController = {
-    registrationPestilent
+    registrationPestilent,
+    loginPestilent
 }

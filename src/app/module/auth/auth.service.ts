@@ -1,5 +1,6 @@
 import { UserStatus } from "../../../generated/prisma/enums";
 import { auth } from "../../lib/auth";
+import { prisma } from "../../lib/prisma";
 
 
 interface iUserRegistrationPayload {
@@ -46,10 +47,27 @@ const userLogin = async (payload: iUserLoginPayload) => {
     if (data.user.status === UserStatus.BLOCKED) {
         throw new Error("User account is blocked")
     }
-  
-   if (data.user.isDeleted || data.user.status === UserStatus.DELETED) {
+
+    if (data.user.isDeleted || data.user.status === UserStatus.DELETED) {
         throw new Error("User account is deleted")
-   }
+    }
+
+    const patient = await prisma.$transaction(async (tx) => {
+      await tx.patient.create({
+        data: {
+            userId: data.user.id,
+            name: payload.name,
+            email: payload.email,
+        }
+      })
+    })
+
+
+
+
+
+
+
     return data
 }
 

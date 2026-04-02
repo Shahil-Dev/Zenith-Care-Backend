@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserStatus } from "../../../generated/prisma/enums";
 import { auth } from "../../lib/auth";
 import { prisma } from "../../lib/prisma";
@@ -9,22 +10,47 @@ interface iUserRegistrationPayload {
     password: string;
 }
 const userRegistration = async (payload: iUserRegistrationPayload) => {
-    const { name, email, password } = payload;
+    let data: any;
 
-    const data = await auth.api.signUpEmail({
-        body: {
-            name,
-            email,
-            password,
+    try {
+        const { name, email, password } = payload;
+
+        data = await auth.api.signUpEmail({
+            body: { name, email, password }
+        });
+
+        if (!data?.user) {
+            throw new Error("Failed to create patient account");
         }
-    })
 
-    if (!data.user) {
-        throw new Error("Failed to create patient account")
+        const patient = await prisma.$transaction(async (tx) => {
+            const patientTx = await tx.patient.create({
+                data: {
+                    userId: data.user.id,
+                    name: payload.name,
+                    email: payload.email,
+                }
+            });
+            return patientTx;
+        });
+
+        return {
+            ...data,
+            patient
+        };
+    } catch (error) {
+        console.log("Transaction error :", error);
+
+        if (data?.user?.id) {
+            await prisma.user.delete({
+                where: {
+                    id: data.user.id
+                }
+            });
+        }
+        throw error;
     }
-    return data
-
-}
+};
 
 interface iUserLoginPayload {
     email: string;
@@ -52,15 +78,7 @@ const userLogin = async (payload: iUserLoginPayload) => {
         throw new Error("User account is deleted")
     }
 
-    const patient = await prisma.$transaction(async (tx) => {
-      await tx.patient.create({
-        data: {
-            userId: data.user.id,
-            name: payload.name,
-            email: payload.email,
-        }
-      })
-    })
+
 
 
 

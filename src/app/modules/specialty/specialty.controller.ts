@@ -7,6 +7,7 @@ import { sendResponse } from "../../Shared/sendResponse";
 
 
 
+
 //createSpecialty
 const createSpecialty = CatchAsync(
     async (req: Request, res: Response) => {

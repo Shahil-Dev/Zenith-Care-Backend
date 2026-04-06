@@ -1,9 +1,9 @@
 import { Gender } from "../../../generated/prisma/enums";
 
 export interface ICreateDoctorPayload {
-    password: string;
-    // Add interface properties here
-    doctor:{
+  password: string;
+  // Add interface properties here
+  doctor: {
     name: string;
     email: string;
     profilePhoto?: string;
@@ -14,8 +14,9 @@ export interface ICreateDoctorPayload {
     gender: Gender;
     appointmentFee: number;
     qualifications: string;
-    currentWorkplace?: string;
+    currentWorkplace: string;
     designation: string;
+
+  };
+  specialties: string[];
 }
-specialtyId: string[];
-    };

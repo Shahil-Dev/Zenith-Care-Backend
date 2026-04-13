@@ -38,7 +38,7 @@ const getDoctorById = async (id: string) => {
 const updateDoctorById = async (id: string, data: any) => {
   const doctor = await prisma.doctor.update({
     where: { id },
-    data,
+    data: { ...data.doctor },
   });
   return doctor;
 };
